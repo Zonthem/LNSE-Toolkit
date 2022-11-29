@@ -1,0 +1,28 @@
+{
+  "name": "tarducteur",
+  "version": "1.0.0",
+  "description": "outil de traduction de fichiers pour LNSE",
+  "exports": "./dist/app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node dist/app.js",
+    "build": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@sindresorhus/tsconfig": "^3.0.1",
+    "@types/figlet": "^1.5.5",
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^18.11.9",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "@types/xml-js": "^1.0.0",
+    "figlet": "^1.5.2",
+    "inquirer": "^9.1.4",
+    "xml-js": "^1.6.11"
+  }
+}
