@@ -1,0 +1,264 @@
+﻿<?xml version = "1.0" encoding = "utf-8"?>
+<root>
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "1"/>
+<field   level = "document" name = "code_client" value = "MM622138005165ER03"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "1.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "3543"/>
+<field   level = "system" name = "Image width" value = "2164"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "1"/>
+<field   level = "document" name = "code_client" value = "MM622138005165ER03"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "2.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "2149"/>
+<field   level = "system" name = "Image width" value = "3542"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "1"/>
+<field   level = "document" name = "code_client" value = "MM622138005165ER03"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "3.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "926"/>
+<field   level = "system" name = "Image width" value = "2018"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "1"/>
+<field   level = "document" name = "code_client" value = "MM622138005165ER03"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "4.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "922"/>
+<field   level = "system" name = "Image width" value = "2004"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "2"/>
+<field   level = "document" name = "code_client" value = "MM931321161686ERT1"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "1.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "3541"/>
+<field   level = "system" name = "Image width" value = "2164"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "2"/>
+<field   level = "document" name = "code_client" value = "MM931321161686ERT1"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "2.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "2156"/>
+<field   level = "system" name = "Image width" value = "3548"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "2"/>
+<field   level = "document" name = "code_client" value = "MM931321161686ERT1"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "3.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "914"/>
+<field   level = "system" name = "Image width" value = "2042"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "2"/>
+<field   level = "document" name = "code_client" value = "MM931321161686ERT1"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "4.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "912"/>
+<field   level = "system" name = "Image width" value = "2042"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "3"/>
+<field   level = "document" name = "code_client" value = "MM615062004911ER63"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "1.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "3539"/>
+<field   level = "system" name = "Image width" value = "2164"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "3"/>
+<field   level = "document" name = "code_client" value = "MM615062004911ER63"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "2.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "2139"/>
+<field   level = "system" name = "Image width" value = "3545"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "3"/>
+<field   level = "document" name = "code_client" value = "MM615062004911ER63"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "3.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "913"/>
+<field   level = "system" name = "Image width" value = "2037"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "3"/>
+<field   level = "document" name = "code_client" value = "MM615062004911ER63"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "4.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "912"/>
+<field   level = "system" name = "Image width" value = "2042"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "4"/>
+<field   level = "document" name = "code_client" value = "MM931321518667ERC1"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "1.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "3540"/>
+<field   level = "system" name = "Image width" value = "2153"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "4"/>
+<field   level = "document" name = "code_client" value = "MM931321518667ERC1"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "2.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "2151"/>
+<field   level = "system" name = "Image width" value = "3542"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "5"/>
+<field   level = "document" name = "code_client" value = "MM610286015002ER13"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "1.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "3539"/>
+<field   level = "system" name = "Image width" value = "2165"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "MMFR1"/>
+<field   level = "document" name = "document" value = "5"/>
+<field   level = "document" name = "code_client" value = "MM610286015002ER13"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "2.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "2138"/>
+<field   level = "system" name = "Image width" value = "3544"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "TLFR1"/>
+<field   level = "document" name = "document" value = "6"/>
+<field   level = "document" name = "code_client" value = "TF509329139367M703"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "1.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "3524"/>
+<field   level = "system" name = "Image width" value = "2318"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "TLFR1"/>
+<field   level = "document" name = "document" value = "6"/>
+<field   level = "document" name = "code_client" value = "TF509329139367M703"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "2.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "3528"/>
+<field   level = "system" name = "Image width" value = "2311"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "TLFR1"/>
+<field   level = "document" name = "document" value = "6"/>
+<field   level = "document" name = "code_client" value = "TF509329139367M703"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "3.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "921"/>
+<field   level = "system" name = "Image width" value = "2013"/>
+</image> 
+<image> 
+<field   level = "batch" name = "UserName" value = "LAD"/>
+<field   level = "batch" name = "Provenance" value = "LNSE"/>
+<field   level = "document" name = "Enseigne" value = "TLFR1"/>
+<field   level = "document" name = "document" value = "6"/>
+<field   level = "document" name = "code_client" value = "TF509329139367M703"/>
+<field   level = "document" name = "Code_Avantage" value = ""/>
+<field   level = "document" name = "Cheque" value = ""/>
+<field   level = "system" name = "Image Filename" value = "4.jpg"/>
+<field   level = "document" name = "path" value = "nopath"/>
+<field   level = "system" name = "Image height" value = "923"/>
+<field   level = "system" name = "Image width" value = "2009"/>
+</image> 
+
+</root>

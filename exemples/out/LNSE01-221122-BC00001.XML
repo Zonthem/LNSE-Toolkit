@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-16"?>
+<batch name="js\exemples\in">
+  <field name="UserName">LAD</field>
+  <field name="Provenance">LNSE</field>
+  <document name="1">
+    <field name="Enseigne">MMFR1</field>
+    <field name="code_client">MM622138005165ER03</field>
+    <field name="Code_Avantage"></field>
+    <field name="Cheque"></field>
+    <page name="1.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2164</field>
+      <field name="height">3543</field>
+    </page>
+    <page name="2.jpg">
+      <field name="path">nopath</field>
+      <field name="width">3542</field>
+      <field name="height">2149</field>
+    </page>
+    <page name="3.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2018</field>
+      <field name="height">926</field>
+    </page>
+    <page name="4.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2004</field>
+      <field name="height">922</field>
+    </page>
+  </document>
+  <document name="2">
+    <field name="Enseigne">MMFR1</field>
+    <field name="code_client">MM931321161686ERT1</field>
+    <field name="Code_Avantage"></field>
+    <field name="Cheque"></field>
+    <page name="1.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2164</field>
+      <field name="height">3541</field>
+    </page>
+    <page name="2.jpg">
+      <field name="path">nopath</field>
+      <field name="width">3548</field>
+      <field name="height">2156</field>
+    </page>
+    <page name="3.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2042</field>
+      <field name="height">914</field>
+    </page>
+    <page name="4.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2042</field>
+      <field name="height">912</field>
+    </page>
+  </document>
+  <document name="3">
+    <field name="Enseigne">MMFR1</field>
+    <field name="code_client">MM615062004911ER63</field>
+    <field name="Code_Avantage"></field>
+    <field name="Cheque"></field>
+    <page name="1.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2164</field>
+      <field name="height">3539</field>
+    </page>
+    <page name="2.jpg">
+      <field name="path">nopath</field>
+      <field name="width">3545</field>
+      <field name="height">2139</field>
+    </page>
+    <page name="3.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2037</field>
+      <field name="height">913</field>
+    </page>
+    <page name="4.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2042</field>
+      <field name="height">912</field>
+    </page>
+  </document>
+  <document name="4">
+    <field name="Enseigne">MMFR1</field>
+    <field name="code_client">MM931321518667ERC1</field>
+    <field name="Code_Avantage"></field>
+    <field name="Cheque"></field>
+    <page name="1.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2153</field>
+      <field name="height">3540</field>
+    </page>
+    <page name="2.jpg">
+      <field name="path">nopath</field>
+      <field name="width">3542</field>
+      <field name="height">2151</field>
+    </page>
+  </document>
+  <document name="5">
+    <field name="Enseigne">MMFR1</field>
+    <field name="code_client">MM610286015002ER13</field>
+    <field name="Code_Avantage"></field>
+    <field name="Cheque"></field>
+    <page name="1.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2165</field>
+      <field name="height">3539</field>
+    </page>
+    <page name="2.jpg">
+      <field name="path">nopath</field>
+      <field name="width">3544</field>
+      <field name="height">2138</field>
+    </page>
+  </document>
+  <document name="6">
+    <field name="Enseigne">TLFR1</field>
+    <field name="code_client">TF509329139367M703</field>
+    <field name="Code_Avantage"></field>
+    <field name="Cheque"></field>
+    <page name="1.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2318</field>
+      <field name="height">3524</field>
+    </page>
+    <page name="2.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2311</field>
+      <field name="height">3528</field>
+    </page>
+    <page name="3.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2013</field>
+      <field name="height">921</field>
+    </page>
+    <page name="4.jpg">
+      <field name="path">nopath</field>
+      <field name="width">2009</field>
+      <field name="height">923</field>
+    </page>
+  </document>
+</batch>
