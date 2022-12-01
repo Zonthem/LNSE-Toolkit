@@ -1,3 +1,5 @@
+import { Image } from "./DomotiInputObject"
+
 export type Declaration = {
   _attributes: {
     version: string,
@@ -20,17 +22,27 @@ export type Page = {
   field: Field[]
 }
 
-export class DomotiOutputObject {
-  data: {
-    _declaration: Declaration,
-    batch: {
-      field: Field[],
-      document: {
-        field: Field[],
-        page: Page[]
-      }
-    }
+export type Document = {
+  _attributes: {
+    name: string
+  },
+  field: Field[],
+  page: Page[]
+}
+
+export type Data = {
+  _declaration: Declaration,
+  batch: {
+    _attributes: {
+      name: string
+    },
+    field: Field[],
+    document: Document[]
   }
+}
+
+export class DomotiOutputObject {
+  data: Data
 
   constructor() {
     this.data = {
@@ -41,47 +53,29 @@ export class DomotiOutputObject {
         }
       },
       batch: {
+        _attributes: {
+          name: 'BCP108'
+        },
         field: [],
-        document: {
-          field: [],
-          page: []
-        }
+        document: []
       }
     }
   }
 
-  private createField(name: string, text: string, type?: string): Field {
-    const field: Field = {
+  addDocument(name: string): Document {
+    const doc: Document = {
       _attributes: {
-        name: name,
-        ...type && {type}
+        name: name
       },
-      _text: text
+      field: [],
+      page: []
     };
 
-    return field;
+    this.data.batch.document.push(doc);
+    return doc;
   }
 
-  addFieldToBatch(name: string, text: string, type?: string) {
-    this.data.batch.field.push(this.createField(name, text, type));
-  }
-
-  addFieldToDocument(name: string, text: string, type?: string) {
-    this.data.batch.document.field.push(this.createField(name, text, type));
-  }
-
-  addFieldToPage(pageName: string, name: string, text: string, type?: string) {
-    const page = this.data.batch.document.page.find(p => p._attributes.name === pageName)
-
-    if (!page) {
-      console.error('page introuvable : ', pageName);
-      console.error(this.data.batch.document.page);
-    }
-
-    this.data.batch.field.push(this.createField(name, text, type));
-  }
-
-  addPage(name: string) {
+  addPagetoDocument(name: string, doc: Document): Page {
     const page: Page = {
       _attributes: {
         name: name
@@ -89,6 +83,67 @@ export class DomotiOutputObject {
       field: []
     };
 
-    this.data.batch.document.page.push(page);
+    doc.page.push(page);
+    return page;
+  }
+
+  addFieldIfNotPresent(fieldList: Field[], name: string, value: string) {
+    const field = fieldList.find(f => f._attributes.name === name);
+    //Si le champ est déjà présent (non undefined)
+    if (field) {
+      if (field._text !== value) {
+        console.error('présent : ' + field._text + ' - arrive : ' + value);
+      }
+      return ;
+    }
+
+    fieldList.push({
+      _text: value,
+      _attributes: {
+        name: name
+      }
+    })
+  }
+
+  fill(imageList: Image[]): Data {
+  
+    imageList.forEach((image: Image) => {
+
+      //bypass tous les champs potentiellement undefined
+      if (Object.values(image).some(o => o == undefined)) {
+        console.log('image avec du null', image);
+        return ;
+      }
+
+      //ajout fields a <batch>
+      this.addFieldIfNotPresent(this.data.batch.field, 'UserName', image.UserName!);
+      this.addFieldIfNotPresent(this.data.batch.field, 'Provenance', image.Provenance!);
+
+      var doc: Document | undefined = this.data.batch.document.find(d => d._attributes.name === image.document)
+      //création doc
+      if (!doc) {
+        doc = this.addDocument(image.document!);
+      }
+
+      //ajout fields a <document>
+      this.addFieldIfNotPresent(doc.field, 'Enseigne', image.Enseigne!);
+      this.addFieldIfNotPresent(doc.field, 'code_client', image.code_client!);
+      this.addFieldIfNotPresent(doc.field, 'Code_Avantage', image.Code_Avantage!);
+      this.addFieldIfNotPresent(doc.field, 'Cheque', image.Cheque!);
+
+      var page : Page | undefined = doc.page.find(p => p._attributes.name === image.Image_Filename);
+      if (!page) {
+        page = this.addPagetoDocument(image.Image_Filename!, doc);
+      }
+
+      //ajout fields a <page>
+      this.addFieldIfNotPresent(page.field, 'path', image.path!);
+      this.addFieldIfNotPresent(page.field, 'width', image.Image_width!);
+      this.addFieldIfNotPresent(page.field, 'height', image.Image_height!);
+
+    });
+
+    return JSON.parse(JSON.stringify(this.data));
+
   }
 }
