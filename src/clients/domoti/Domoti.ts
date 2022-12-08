@@ -42,6 +42,9 @@ export class Domoti extends AbstractClient {
 
         if (isXmlElement(obj)) {
           const xml = this.translate(obj);
+          if (!fs.existsSync(folders.output)) {
+            fs.mkdirSync(folders.output);
+          }
           fs.writeFileSync(path.join(folders.output, element), xml);
         }
       }

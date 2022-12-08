@@ -133,6 +133,9 @@ export class DomotiOutputObject {
 
       var page : Page | undefined = doc.page.find(p => p._attributes.name === image.Image_Filename);
       if (!page) {
+        //coupe le nom du fichier de "truc.aze" à "truc"
+        //ATTENTION : marche pas si le nom du fichier est "truc.machin.pdf" parce que y'a un "." de trop
+        let imageName: string = image.Image_Filename!.split('.')[0];
         page = this.addPagetoDocument(image.Image_Filename!, doc);
       }
 
