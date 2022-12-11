@@ -1,1 +1,2 @@
-npm run start
+CALL npm run start
+pause

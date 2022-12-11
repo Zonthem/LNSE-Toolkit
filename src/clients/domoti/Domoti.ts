@@ -63,7 +63,6 @@ export class Domoti extends AbstractClient {
     }
 
     const listFilename: string[] = filename.split(".")[0].split('-');
-    console.log(listFilename);
     
     outputObject.data.batch._attributes.name = listFilename[listFilename.length - 1];
 
