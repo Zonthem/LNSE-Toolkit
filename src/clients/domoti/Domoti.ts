@@ -41,7 +41,7 @@ export class Domoti extends AbstractClient {
         const obj = xml2js(file);
 
         if (isXmlElement(obj)) {
-          const xml = this.translate(obj);
+          const xml = this.translate(obj, element);
           if (!fs.existsSync(folders.output)) {
             fs.mkdirSync(folders.output);
           }
@@ -51,7 +51,7 @@ export class Domoti extends AbstractClient {
     });
   }
 
-  translate(obj: XmlElement): string {
+  translate(obj: XmlElement, filename: string): string {
     const rootElements: XmlElement[] | undefined = obj.elements;
     const outputObject: DomotiOutputObject = new DomotiOutputObject();
     const inputObject: DomotiInputObject = new DomotiInputObject();
@@ -62,9 +62,10 @@ export class Domoti extends AbstractClient {
       return '';
     }
 
-    const listInputFolder: string[] = this.inputFolder.split('-');
+    const listFilename: string[] = filename.split(".")[0].split('-');
+    console.log(listFilename);
     
-    outputObject.data.batch._attributes.name = listInputFolder[listInputFolder.length - 1];
+    outputObject.data.batch._attributes.name = listFilename[listFilename.length - 1];
 
     rootElements.forEach(image => {
       const imageElements: XmlElement[] | undefined = image.elements;
