@@ -6,13 +6,14 @@ import { AbstractClient } from "../AbstractClient.js";
 import path from "path";
 import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
 import { Data, DomotiOutputObject } from "./DomotiOutputObject.js";
+import { DomotiCourrierOutputObject } from "./DomotiCourrierOutputObject.js";
 import { DomotiInputObject, Image } from "./DomotiInputObject.js";
 
 function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
   return el.declaration.attributes;
 }
 
-export class Domoti extends AbstractClient {
+export class DomotiCourrier extends AbstractClient {
 
   inputFolder!: string;
 
@@ -36,7 +37,7 @@ export class Domoti extends AbstractClient {
     var filelist: string[] = [];
     const folderlist: string[] = fs.readdirSync(folders.input);
 
-    for (const folder of folderlist) {
+    for (let folder in folderlist) {
       let stats: fs.Stats = fs.statSync(path.join(folders.input, folder));
       if (stats.isDirectory()) {
         fs.readdirSync(path.join(folders.input, folder)).forEach(f => {
@@ -65,7 +66,7 @@ export class Domoti extends AbstractClient {
 
   translate(obj: XmlElement, filename: string): string {
     const rootElements: XmlElement[] | undefined = obj.elements;
-    const outputObject: DomotiOutputObject = new DomotiOutputObject();
+    const outputObject: DomotiOutputObject = new DomotiCourrierOutputObject();
     const inputObject: DomotiInputObject = new DomotiInputObject();
     var img: Image;
 
@@ -128,15 +129,6 @@ export class Domoti extends AbstractClient {
             case ('document'):
               img.document = value;
               break;
-            case ('code_client'):
-              img.code_client = value;
-              break;
-            case ('Code_Avantage'):
-              img.Code_Avantage = value;
-              break;
-            case ('Cheque'):
-              img.Cheque = value;
-              break;
             case ('Image Filename'):
               img.Image_Filename = value;
               break;
@@ -150,7 +142,7 @@ export class Domoti extends AbstractClient {
               img.Image_width = value;
               break;
             default:
-              console.log('je connais pas');
+              console.log('Attribut non traité dans ' + filename + ' : ' + fieldAttributes.name + '(valeur=' + value + ')');
           }
         });
 

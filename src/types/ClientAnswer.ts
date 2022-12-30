@@ -1,3 +1,3 @@
 export type ClientAnswer = {
-  client: 'domoti';
+  client: 'domoti_bon_commande' | 'domoti_courrier';
 }

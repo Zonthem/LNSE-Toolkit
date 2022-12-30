@@ -6,8 +6,12 @@ export const mainMenuPrompt: QuestionCollection<any> = {
   message: 'Client',
   choices: [
     {
-      name: 'Domoti',
-      value: 'domoti'
+      name: 'Domoti - Bon de commande',
+      value: 'domoti_bon_commande'
+    },
+    {
+      name: 'Domoti - Courrier',
+      value: 'domoti_courrier'
     }
   ]
 }
