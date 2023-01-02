@@ -37,7 +37,8 @@ export class DomotiCourrier extends AbstractClient {
     var filelist: string[] = [];
     const folderlist: string[] = fs.readdirSync(folders.input);
 
-    for (let folder in folderlist) {
+    for (const folder of folderlist) {
+      console.log(folderlist);
       let stats: fs.Stats = fs.statSync(path.join(folders.input, folder));
       if (stats.isDirectory()) {
         fs.readdirSync(path.join(folders.input, folder)).forEach(f => {
