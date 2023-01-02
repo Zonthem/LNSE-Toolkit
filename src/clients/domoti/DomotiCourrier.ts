@@ -1,69 +1,10 @@
-import inquirer from "inquirer";
-import * as fs from 'fs';
-import { inputFolderPrompt, outputFolderPrompt } from "../../commands/DomotiPrompt.js";
-import { DomotiAnswer } from "../../types/DomotiAnswer.js";
-import { AbstractClient } from "../AbstractClient.js";
-import path from "path";
-import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
+import { Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
 import { Data, DomotiOutputObject } from "./DomotiOutputObject.js";
 import { DomotiCourrierOutputObject } from "./DomotiCourrierOutputObject.js";
 import { DomotiInputObject, Image } from "./DomotiInputObject.js";
+import { Domoti } from "./Domoti.js";
 
-function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
-  return el.declaration.attributes;
-}
-
-export class DomotiCourrier extends AbstractClient {
-
-  inputFolder!: string;
-
-  constructor() {
-    super();
-    this.runMessage();
-  }
-
-  runMessage() {
-    inquirer.prompt([
-      inputFolderPrompt,
-      outputFolderPrompt
-    ])
-      .then((answers: DomotiAnswer) => {
-        this.startProcess(answers)
-      })
-  }
-
-  startProcess(folders: DomotiAnswer) {
-    this.inputFolder = folders.input;
-    var filelist: string[] = [];
-    const folderlist: string[] = fs.readdirSync(folders.input);
-
-    for (const folder of folderlist) {
-      console.log(folderlist);
-      let stats: fs.Stats = fs.statSync(path.join(folders.input, folder));
-      if (stats.isDirectory()) {
-        fs.readdirSync(path.join(folders.input, folder)).forEach(f => {
-          folderlist.push(path.join(folder, f));
-        })
-      } else {
-        filelist.push(folder);
-      }
-    }
-
-    filelist.forEach(element => {
-      if (element.toLowerCase().endsWith('.xml')) {
-        let file = fs.readFileSync(path.join(folders.input, element), 'utf-8');
-        const obj = xml2js(file);
-
-        if (isXmlElement(obj)) {
-          const xml = this.translate(obj, element);
-          if (!fs.existsSync(folders.output)) {
-            fs.mkdirSync(folders.output);
-          }
-          this.writeFile(path.join(folders.output, element), xml);
-        }
-      }
-    });
-  }
+export class DomotiCourrier extends Domoti {
 
   translate(obj: XmlElement, filename: string): string {
     const rootElements: XmlElement[] | undefined = obj.elements;
