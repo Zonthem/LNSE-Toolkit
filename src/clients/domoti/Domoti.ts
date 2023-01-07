@@ -172,9 +172,16 @@ export class Domoti extends AbstractClient {
     });
 
     //Ici, inputObject est censé être complet
-    const data: Data = outputObject.fill(inputObject.imageList);
+    const isMultipleCheques: boolean = this.checkNameForMultipleCheques(listFilename[listFilename.length - 1]);
+    const data: Data = outputObject.fill(inputObject.imageList, isMultipleCheques);
     const xml = js2xml(data, { compact: true });
     return xml;
+  }
+
+  checkNameForMultipleCheques(filename: string): boolean {
+    //BE et BM
+    const pattern = /^B[EM]\d{5}$/;
+    return pattern.test(filename);
   }
 
 }

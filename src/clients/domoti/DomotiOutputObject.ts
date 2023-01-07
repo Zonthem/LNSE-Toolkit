@@ -105,7 +105,7 @@ export class DomotiOutputObject {
     })
   }
 
-  fill(imageList: Image[]): Data {
+  fill(imageList: Image[], multipleCheques: boolean = true): Data {
   
     imageList.forEach((image: Image) => {
 
@@ -129,7 +129,13 @@ export class DomotiOutputObject {
       this.addFieldIfNotPresent(doc.field, 'Enseigne', image.Enseigne!);
       this.addFieldIfNotPresent(doc.field, 'code_client', image.code_client!);
       this.addFieldIfNotPresent(doc.field, 'Code_Avantage', image.Code_Avantage!);
-      this.addFieldIfNotPresent(doc.field, 'Cheque', image.Cheque!);
+      if (!multipleCheques) {
+        this.addFieldIfNotPresent(doc.field, 'Cheque', image.Cheque!);
+      } else {
+        this.addFieldIfNotPresent(doc.field, 'Cheque1', image.Cheque!);
+        this.addFieldIfNotPresent(doc.field, 'Cheque2', '');
+        this.addFieldIfNotPresent(doc.field, 'Cheque3', '');
+      }
 
       var page : Page | undefined = doc.page.find(p => p._attributes.name === image.Image_Filename);
       if (!page) {
