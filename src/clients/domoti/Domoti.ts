@@ -7,6 +7,7 @@ import path from "path";
 import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
 import { Data, DomotiOutputObject } from "./DomotiOutputObject.js";
 import { DomotiInputObject, Image } from "./DomotiInputObject.js";
+import log4js, { Logger } from "log4js";
 
 function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
   return el.declaration.attributes;
@@ -15,10 +16,12 @@ function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
 export class Domoti extends AbstractClient {
 
   inputFolder!: string;
+  logger: Logger;
 
   constructor() {
     super();
     this.runMessage();
+    this.logger = log4js.getLogger('app');
   }
 
   runMessage() {
@@ -47,20 +50,30 @@ export class Domoti extends AbstractClient {
       }
     }
 
+    this.logger.info(folderlist.length + ' fichiers découverts');
+
     filelist.forEach(element => {
       if (element.toLowerCase().endsWith('.xml')) {
+        this.logger.info(`Traitement de ${path.join(folders.input, element)}`);
         let file = fs.readFileSync(path.join(folders.input, element), 'utf-8');
         const obj = xml2js(file);
 
         if (isXmlElement(obj)) {
-          const xml = this.translate(obj, element);
+          this.logger.info(`Traduction de ${path.join(folders.input, element)} ...`);
+          const xml = this.translate(obj, path.join(folders.input, element));
+          this.logger.info(`Fin de la traduction de ${path.join(folders.input, element)}`);
           if (!fs.existsSync(folders.output)) {
+            this.logger.info(`${folders.output} n\'existe pas, création en cours ...`);
             fs.mkdirSync(folders.output);
           }
           this.writeFile(path.join(folders.output, element), xml);
+          this.logger.info(`${path.join(folders.input, element)} a été généré`);
+        } else {
+          this.logger.info(`${path.join(folders.input, element)} est pourri`);
         }
       }
     });
+    this.logger.info('Tous les éléments sont traités, fermeture de l\'app');
   }
 
   translate(obj: XmlElement, filename: string): string {
@@ -70,7 +83,7 @@ export class Domoti extends AbstractClient {
     var img: Image;
 
     if (rootElements === undefined) {
-      console.error('root null');
+      this.logger.error('Élément root null sur ' + filename);
       return '';
     }
 
@@ -150,7 +163,7 @@ export class Domoti extends AbstractClient {
               img.Image_width = value;
               break;
             default:
-              console.log('je connais pas');
+              this.logger.warn('Attribut non traité dans ' + filename + ' : ' + fieldAttributes.name + '(valeur=' + value + ')');
           }
         });
 

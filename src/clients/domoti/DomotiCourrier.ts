@@ -13,7 +13,7 @@ export class DomotiCourrier extends Domoti {
     var img: Image;
 
     if (rootElements === undefined) {
-      console.error('root null');
+      this.logger.error('Élément root null sur ' + filename);
       return '';
     }
 
@@ -84,7 +84,7 @@ export class DomotiCourrier extends Domoti {
               img.Image_width = value;
               break;
             default:
-              console.log('Attribut non traité dans ' + filename + ' : ' + fieldAttributes.name + '(valeur=' + value + ')');
+              this.logger.warn('Attribut non traité dans ' + filename + ' : ' + fieldAttributes.name + '(valeur=' + value + ')');
           }
         });
 
