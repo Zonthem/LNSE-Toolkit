@@ -21,7 +21,7 @@ export class Domoti extends AbstractClient {
   constructor() {
     super();
     this.runMessage();
-    this.logger = log4js.getLogger('app');
+    this.logger = log4js.getLogger();
   }
 
   runMessage() {

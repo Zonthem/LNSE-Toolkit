@@ -5,6 +5,7 @@ import { DomotiCourrier } from "./clients/domoti/DomotiCourrier.js";
 import { MainMenu } from "./MainMenu.js";
 import { ClientAnswer } from "./types/ClientAnswer.js";
 import log4js from "log4js";
+import { Casino } from "./clients/casino/Casino.js";
 
 class CliTool {
 
@@ -38,6 +39,9 @@ class CliTool {
       case 'domoti_courrier':
         this.currentClient = new DomotiCourrier();
         break;
+      case 'casino':
+        this.currentClient = new Casino();
+        break;
     }
   }
 
@@ -49,7 +53,7 @@ class CliTool {
     log4js.configure({
       appenders: { 
         info: { 
-          type: "file", 
+          type: 'file', 
           filename: "logs/info.log",
         },
         stdout: {
@@ -57,15 +61,12 @@ class CliTool {
         } 
       },
       categories: { 
-        app: { 
-          appenders: ['info', 'stdout'], 
-          level: 'INFO' 
-        },
         default: {
-          appenders: ['stdout'],
-          level: 'ERROR'
+          appenders: ['info', 'stdout'],
+          level: 'info'
         } 
       },
+      disableClustering: true
     })
   }
 

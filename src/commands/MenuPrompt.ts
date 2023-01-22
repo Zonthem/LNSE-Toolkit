@@ -12,6 +12,10 @@ export const mainMenuPrompt: QuestionCollection<any> = {
     {
       name: 'Domoti - Courrier',
       value: 'domoti_courrier'
+    },
+    {
+      name: 'Casino',
+      value: 'casino'
     }
   ]
 }
