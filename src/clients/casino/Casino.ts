@@ -153,19 +153,19 @@ export class Casino extends AbstractClient {
       multiLineList = [multiLineCodeEntrepot, multiLineNumCommande];
 
       hubFile.push({
-        _attributes: { FileName: element.document_filename }, //?
+        _attributes: { FileName: element.document_filename },
         Categorie: element.categorie,
         Code_Type: element.code_type,
         Code_Sous_Type: element.code_sous_type,
         GEDDataFlux: { Code_Fournisseur: element.code_fournisseur },
         GEDMetadonnees: {
           Code_societe: element.code_societe,
-          Date_document: element.date_traitement, //?
+          Date_document: element.date_traitement,
           Date_livraison: element.date_livraison,
           Type_document: type,
           Entrepot_admin: element.entrepot_admin
         },
-        GEDMultiLinesList: multiLineList
+        GEDMultiLinesList: JSON.parse(JSON.stringify(multiLineList))
       })
     });
     var outputLEV: HUBIndex = {
