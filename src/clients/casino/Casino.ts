@@ -153,7 +153,7 @@ export class Casino extends AbstractClient {
       multiLineList = [multiLineCodeEntrepot, multiLineNumCommande];
 
       hubFile.push({
-        _attributes: { FileName: element.compteur_lev }, //?
+        _attributes: { FileName: element.document_filename }, //?
         Categorie: element.categorie,
         Code_Type: element.code_type,
         Code_Sous_Type: element.code_sous_type,

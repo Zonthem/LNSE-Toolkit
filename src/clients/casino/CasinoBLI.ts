@@ -10,7 +10,7 @@ export class CasinoBLI {
   entrepot_admin: string;
   date_livraison: string;
   code_societe: string;
-  compteur_lev: string;
+  document_filename: string;
 
   constructor(
     _categorie: string, 
@@ -24,7 +24,7 @@ export class CasinoBLI {
     _entrepot_admin: string, 
     _date_livraison: string, 
     _code_societe: string, 
-    _compteur_lev: string
+    _document_filename: string
   ) {
     this.categorie = _categorie
     this.code_type = _code_type
@@ -37,6 +37,6 @@ export class CasinoBLI {
     this.entrepot_admin = _entrepot_admin
     this.date_livraison = _date_livraison
     this.code_societe = _code_societe
-    this.compteur_lev = _compteur_lev
+    this.document_filename = _document_filename
   }
 }
