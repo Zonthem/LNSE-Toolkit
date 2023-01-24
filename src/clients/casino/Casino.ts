@@ -192,7 +192,7 @@ export class Casino extends AbstractClient {
       this.getElementValue(doc, 'Entrepot_admin'),
       this.getElementValue(doc, 'Date_livraison'),
       this.getElementValue(doc, 'Code_societe'),
-      this.getElementValue(doc, 'Compteur_LEV'),
+      this.getElementValue(doc, 'Document Filename'),
     );
   }
 
@@ -209,7 +209,7 @@ export class Casino extends AbstractClient {
       this.getElementValue(doc, 'Entrepot_admin'),
       this.getElementValue(doc, 'Date_livraison'),
       this.getElementValue(doc, 'Code_societe'),
-      this.getElementValue(doc, 'Compteur_LEV'),
+      this.getElementValue(doc, 'Document Filename'),
     );
   }
 
