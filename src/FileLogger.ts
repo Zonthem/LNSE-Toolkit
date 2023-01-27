@@ -1,6 +1,14 @@
 import { Logger } from "ts-log";
 import * as fs from "fs";
 
+
+/**
+ * Log to
+ * File
+ * Console
+ * 
+ * C'est un singleton
+ */
 export class FileLogger implements Logger {
   private readonly fd: number;
 
@@ -19,26 +27,28 @@ export class FileLogger implements Logger {
   }
 
   public trace(message?: any, ...optionalParams: any[]): void {
-    this.append("TRACE", `${message} ${JSON.stringify(optionalParams)}`);
+    this.append("TRACE", `${message}`);
   }
 
   public debug(message?: any, ...optionalParams: any[]): void {
-    this.append("DEBUG", `${message} ${JSON.stringify(optionalParams)}`);
+    this.append("DEBUG", `${message}`);
   }
 
   public info(message?: any, ...optionalParams: any[]): void {
-    this.append("INFO ", `${message} ${JSON.stringify(optionalParams)}`);
+    this.append("INFO ", `${message}`);
   }
 
   public warn(message?: any, ...optionalParams: any[]): void {
-    this.append("WARN ", `${message} ${JSON.stringify(optionalParams)}`);
+    this.append("WARN ", `${message}`);
   }
 
   public error(message?: any, ...optionalParams: any[]): void {
-    this.append("ERROR", `${message} ${JSON.stringify(optionalParams)}`);
+    this.append("ERROR", `${message}`);
   }
 
   private append(type: string, message: string) {
-    fs.writeSync(this.fd, `${new Date().toISOString()} ${type} ${message}\n`);
+    const msg: string = `${new Date().toISOString()} ${type} ${message}`;
+    fs.writeSync(this.fd, msg + '\n');
+    console.log(msg)
   }
 }
