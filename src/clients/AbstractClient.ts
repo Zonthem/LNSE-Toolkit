@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import path from "path";
 
-export abstract class AbstractClient {
+export abstract class Client {
 
   writeFile(_path: string, contents: string, cb?: fs.WriteFileOptions) {
     try {

@@ -1,5 +1,5 @@
 import figlet from "figlet";
-import { AbstractClient } from "./clients/AbstractClient.js";
+import { Client } from "./clients/AbstractClient.js";
 import { Domoti } from "./clients/domoti/Domoti.js";
 import { DomotiCourrier } from "./clients/domoti/DomotiCourrier.js";
 import { MainMenu } from "./MainMenu.js";
@@ -10,7 +10,7 @@ class CliTool {
 
   header: string = figlet.textSync('LNSE toolkit');
 
-  currentClient!: AbstractClient;
+  currentClient!: Client;
 
   run() {
 

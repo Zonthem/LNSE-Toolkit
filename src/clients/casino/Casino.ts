@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import path from 'path';
 import { inputFolderPrompt, outputFolderPrompt } from "../../commands/CasinoPrompt.js";
 import { CasinoAnswer } from "../../types/CasinoAnswer.js";
-import { AbstractClient } from "../AbstractClient.js";
+import { Client } from "../AbstractClient.js";
 import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
 import { CasinoLEV } from "./CasinoLEV.js";
 import { CasinoBLI } from "./CasinoBLI.js";
@@ -15,7 +15,7 @@ function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
   return el?.declaration.attributes;
 }
 
-export class Casino extends AbstractClient {
+export class Casino extends Client {
   inputFolder!: string;
   logger: Logger;
 
@@ -72,6 +72,8 @@ export class Casino extends AbstractClient {
           }
         }
 
+        this.logger.info(`Données trouvées : ${this.listLEV.length} LEV et ${this.listBLI.length} BLI`)
+
         const xml: {
           lev: string,
           bli: string
@@ -81,8 +83,8 @@ export class Casino extends AbstractClient {
           this.logger.info(`${folders.output} n\'existe pas, création en cours ...`);
           fs.mkdirSync(folders.output);
         }
-        this.writeFile(path.join(folders.output, 'HUB-INDEX-LEV.xml'), xml.lev);
-        this.writeFile(path.join(folders.output, 'HUB-INDEX-BLI.xml'), xml.bli);
+        this.writeFile(path.join(folders.output, this.nameOutputFile('LEV', element)), xml.lev);
+        this.writeFile(path.join(folders.output, this.nameOutputFile('BL', element)), xml.bli);
         this.logger.info(`${path.join(folders.input, element)} a été généré`);
       }
     });
@@ -111,7 +113,7 @@ export class Casino extends AbstractClient {
   }
 
   translate(): { lev: string, bli: string } {
-    this.logger.info('translate')
+    this.logger.info('Début traduction')
     
     const xmlLEV = this.createXMLStruct(this.listLEV, 'Lettre de voiture');
     const xmlBLI = this.createXMLStruct(this.listBLI, 'BL');
@@ -237,5 +239,23 @@ export class Casino extends AbstractClient {
       default:
         return '';
     }
+  }
+
+  nameOutputFile(type: 'LEV'|'BL'|'LER', nameInputFile: string): string {
+    let fileInputCut: string[]  = nameInputFile.split('.')[0].split('_');
+    if (fileInputCut.length < 3) {
+      this.logger.warn('Le fichier d\'entrée ' + nameInputFile + ' a un nom qui ne correspond pas au pattern attendu : HUB-INDEX-XXX_yyyy-MM-dd_numLot.xml')
+      return 'HUB-INDEX-' + type + '.xml';
+    }
+    let newName: string = 
+      'HUB-INDEX-' 
+      + type
+      + '_'
+      + fileInputCut[1]
+      + '_'
+      + fileInputCut[2]
+      + '.xml';
+
+    return newName;
   }
 }

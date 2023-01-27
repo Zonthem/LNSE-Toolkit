@@ -2,7 +2,7 @@ import inquirer from "inquirer";
 import * as fs from 'fs';
 import { inputFolderPrompt, outputFolderPrompt } from "../../commands/DomotiPrompt.js";
 import { DomotiAnswer } from "../../types/DomotiAnswer.js";
-import { AbstractClient } from "../AbstractClient.js";
+import { Client } from "../AbstractClient.js";
 import path from "path";
 import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
 import { Data, DomotiOutputObject } from "./DomotiOutputObject.js";
@@ -14,7 +14,7 @@ function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
   return el.declaration.attributes;
 }
 
-export class Domoti extends AbstractClient {
+export class Domoti extends Client {
 
   inputFolder!: string;
   logger: Logger;
