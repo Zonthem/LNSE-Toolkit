@@ -4,7 +4,6 @@ import { Domoti } from "./clients/domoti/Domoti.js";
 import { DomotiCourrier } from "./clients/domoti/DomotiCourrier.js";
 import { MainMenu } from "./MainMenu.js";
 import { ClientAnswer } from "./types/ClientAnswer.js";
-import log4js from "log4js";
 import { Casino } from "./clients/casino/Casino.js";
 
 class CliTool {
@@ -14,7 +13,6 @@ class CliTool {
   currentClient!: AbstractClient;
 
   run() {
-    this.configureLogs();
 
     console.log(this.header);
 
@@ -25,10 +23,7 @@ class CliTool {
       })
       .catch(error => {
         console.error(error);
-      })
-      .finally(() => {
-        log4js.shutdown();
-      })
+      });
   }
 
   redirectToClient(client: ClientAnswer): void {
@@ -44,32 +39,6 @@ class CliTool {
         break;
     }
   }
-
-  /**
-   * Partie utilisé pour configurer la lib log4js
-   */
-  configureLogs(): void {
-    
-    log4js.configure({
-      appenders: { 
-        info: { 
-          type: 'file', 
-          filename: "logs/info.log",
-        },
-        stdout: {
-          type: 'stdout'
-        } 
-      },
-      categories: { 
-        default: {
-          appenders: ['info', 'stdout'],
-          level: 'info'
-        } 
-      },
-      disableClustering: true
-    })
-  }
-
 }
 
 const cliTool = new CliTool();
