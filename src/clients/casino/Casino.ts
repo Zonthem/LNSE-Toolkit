@@ -81,8 +81,8 @@ export class Casino extends AbstractClient {
           this.logger.info(`${folders.output} n\'existe pas, création en cours ...`);
           fs.mkdirSync(folders.output);
         }
-        this.writeFile(path.join(folders.output, 'HUB-INDEX-LEV.xml'), xml.lev);
-        this.writeFile(path.join(folders.output, 'HUB-INDEX-BLI.xml'), xml.bli);
+        this.writeFile(path.join(folders.output, 'LEV','HUB-INDEX-LEV.xml'), xml.lev);
+        this.writeFile(path.join(folders.output, 'BLI', 'HUB-INDEX-BLI.xml'), xml.bli);
         this.logger.info(`${path.join(folders.input, element)} a été généré`);
       }
     });
