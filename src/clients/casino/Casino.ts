@@ -1,7 +1,6 @@
 import inquirer from "inquirer";
 import * as fs from 'fs';
 import path from 'path';
-import log4js, { Logger } from "log4js";
 import { inputFolderPrompt, outputFolderPrompt } from "../../commands/CasinoPrompt.js";
 import { CasinoAnswer } from "../../types/CasinoAnswer.js";
 import { AbstractClient } from "../AbstractClient.js";
@@ -9,6 +8,8 @@ import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } fro
 import { CasinoLEV } from "./CasinoLEV.js";
 import { CasinoBLI } from "./CasinoBLI.js";
 import { GEDMultiLines, HUBFile, HUBIndex } from "./CasinoOutput.js";
+import { Logger } from "ts-log";
+import { FileLogger } from "../../FileLogger.js";
 
 function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
   return el?.declaration.attributes;
@@ -25,7 +26,7 @@ export class Casino extends AbstractClient {
   constructor() {
     super();
     this.runMessage();
-    this.logger = log4js.getLogger();
+    this.logger = FileLogger.getInstance();
   }
 
   runMessage() {
@@ -126,7 +127,7 @@ export class Casino extends AbstractClient {
     var multiLineList: GEDMultiLines[];
     var multiLineNumCommande: GEDMultiLines = {
       GEDMultiLines: {
-        _attributes: { type: 'Num_commade' },
+        _attributes: { type: 'Num_commande' },
         Line_value: []
       }
     };

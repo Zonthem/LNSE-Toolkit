@@ -7,7 +7,8 @@ import path from "path";
 import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
 import { Data, DomotiOutputObject } from "./DomotiOutputObject.js";
 import { DomotiInputObject, Image } from "./DomotiInputObject.js";
-import log4js, { Logger } from "log4js";
+import { FileLogger } from "../../FileLogger.js";
+import { Logger } from "ts-log";
 
 function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
   return el.declaration.attributes;
@@ -21,7 +22,7 @@ export class Domoti extends AbstractClient {
   constructor() {
     super();
     this.runMessage();
-    this.logger = log4js.getLogger();
+    this.logger = FileLogger.getInstance();
   }
 
   runMessage() {
