@@ -21,14 +21,14 @@ export type HUBFile = {
     Date_livraison: string,
     Code_societe: string,
   },
-  GEDMultiLinesList: GEDMultiLines[]
+  GEDMultiLinesList: {
+    GEDMultiLines: GEDMultiLines[]
+  }
 }
 
 export type GEDMultiLines = {
-  GEDMultiLines: {
-    _attributes: {
-      type: string
-    },
-    Line_value: string[]
-  }
+  _attributes: {
+    type: string
+  },
+  Line_value: string[]
 }

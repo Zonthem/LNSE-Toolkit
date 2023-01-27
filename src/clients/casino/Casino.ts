@@ -95,7 +95,7 @@ export class Casino extends Client {
       let sousType = doc.elements?.find(f => {
         return f.attributes?.name === "Code_sous_Type"
       })?.attributes?.value
-      switch(sousType) {
+      switch (sousType) {
         case 'LEV':
           let newLEV = this.createLEV(doc);
           this.lastLEV = newLEV;
@@ -114,7 +114,7 @@ export class Casino extends Client {
 
   translate(): { lev: string, bli: string } {
     this.logger.info('Début traduction')
-    
+
     const xmlLEV = this.createXMLStruct(this.listLEV, 'Lettre de voiture');
     const xmlBLI = this.createXMLStruct(this.listBLI, 'BL');
 
@@ -126,35 +126,37 @@ export class Casino extends Client {
   }
 
   createXMLStruct(list: CasinoLEV[] | CasinoBLI[], type: 'Lettre de voiture' | 'BL'): string {
-    var multiLineList: GEDMultiLines[];
-    var multiLineNumCommande: GEDMultiLines = {
-      GEDMultiLines: {
-        _attributes: { type: 'Num_commande' },
-        Line_value: []
-      }
-    };
-    var multiLineCodeEntrepot: GEDMultiLines = {
-      GEDMultiLines: {
-        _attributes: { type: 'Code_entrepot' },
-        Line_value: []
-      }
-    };
+    var multiLineList: GEDMultiLines[] = [];
+    var multiLineNumCommande: GEDMultiLines;
+    var multiLineCodeEntrepot: GEDMultiLines;
     var hubFile: HUBFile[] = [];
 
     list.forEach(element => {
-      multiLineNumCommande.GEDMultiLines.Line_value = [];
-      multiLineCodeEntrepot.GEDMultiLines.Line_value = [];
+      //Reset multiline
+      multiLineList = [];
+      multiLineCodeEntrepot = {
+        _attributes: { type: 'Code_entrepot' },
+        Line_value: []
+      };
+      multiLineNumCommande = {
+        _attributes: { type: 'Num_commande' },
+        Line_value: []
+      };
 
+      //Set multiline pour code_entrepot
       element.code_entrepot.forEach(code => {
-        multiLineCodeEntrepot.GEDMultiLines.Line_value.push(code)
+        multiLineCodeEntrepot.Line_value.push(code)
       });
 
+      //Set multiline pour 
       element.num_commande.forEach(num => {
-        multiLineNumCommande.GEDMultiLines.Line_value.push(num)
+        multiLineNumCommande.Line_value.push(num)
       });
 
+      //Concat des listes
       multiLineList = [multiLineCodeEntrepot, multiLineNumCommande];
 
+      //Insersion du doc dans la liste des docs générés
       hubFile.push({
         _attributes: { FileName: element.document_filename },
         Categorie: element.categorie,
@@ -168,7 +170,10 @@ export class Casino extends Client {
           Type_document: type,
           Entrepot_admin: element.entrepot_admin
         },
-        GEDMultiLinesList: JSON.parse(JSON.stringify(multiLineList))
+        GEDMultiLinesList: {
+          //On force la séparation entre l'objet et sa référence
+          GEDMultiLines: JSON.parse(JSON.stringify(multiLineList))
+        }
       })
     });
     var outputLEV: HUBIndex = {
@@ -235,20 +240,20 @@ export class Casino extends Client {
       case 'string':
         return a;
       case 'number':
-        return ''+a
+        return '' + a
       default:
         return '';
     }
   }
 
-  nameOutputFile(type: 'LEV'|'BL'|'LER', nameInputFile: string): string {
-    let fileInputCut: string[]  = nameInputFile.split('.')[0].split('_');
+  nameOutputFile(type: 'LEV' | 'BL' | 'LER', nameInputFile: string): string {
+    let fileInputCut: string[] = nameInputFile.split('.')[0].split('_');
     if (fileInputCut.length < 3) {
       this.logger.warn('Le fichier d\'entrée ' + nameInputFile + ' a un nom qui ne correspond pas au pattern attendu : HUB-INDEX-XXX_yyyy-MM-dd_numLot.xml')
       return 'HUB-INDEX-' + type + '.xml';
     }
-    let newName: string = 
-      'HUB-INDEX-' 
+    let newName: string =
+      'HUB-INDEX-'
       + type
       + '_'
       + fileInputCut[1]
