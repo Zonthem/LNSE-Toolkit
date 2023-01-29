@@ -212,8 +212,8 @@ export class Casino extends Client {
       this.getElementValue(doc, 'code_fournisseur'),
       this.getElementValue(doc, 'date_traitement'),
       this.getElementValue(doc, 'Num_bl'),
-      [this.getElementValue(doc, 'num_commande')],
-      [this.getElementValue(doc, 'code_entrepot')],
+      this.getAllNotNullElementValue(doc, 'num_commande'),
+      this.getAllNotNullElementValue(doc, 'code_entrepot'),
       this.getElementValue(doc, 'Entrepot_admin'),
       this.getElementValue(doc, 'Date_livraison'),
       this.getElementValue(doc, 'Code_societe'),
@@ -244,6 +244,27 @@ export class Casino extends Client {
       default:
         return '';
     }
+  }
+
+  getAllNotNullElementValue(doc: XmlElement, key: string): string[] {
+    let a: (string)[] | undefined = doc.elements
+      ?.filter(f => {
+        return typeof f.attributes?.name === 'string'
+          && f.attributes?.name.toLowerCase().startsWith(key.toLowerCase())
+          && f.attributes.value !== '';
+      })
+      .map<string>(m => {
+        switch (typeof m.attributes?.value) {
+          case 'string':
+            return m.attributes.value;
+          case 'number':
+            return '' + m.attributes.value
+          default:
+            return '';
+        }
+      });
+
+    return a || [];
   }
 
   nameOutputFile(type: 'LEV' | 'BL' | 'LER', nameInputFile: string): string {
