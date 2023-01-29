@@ -4,15 +4,16 @@ import path from 'path';
 import { inputFolderPrompt, outputFolderPrompt } from "../../commands/CasinoPrompt.js";
 import { CasinoAnswer } from "../../types/CasinoAnswer.js";
 import { Client } from "../AbstractClient.js";
-import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
+import { xml2js, Element as XmlElement, ElementCompact, js2xml } from "xml-js";
 import { CasinoLEV } from "./CasinoLEV.js";
 import { CasinoBLI } from "./CasinoBLI.js";
 import { GEDMultiLines, HUBFile, HUBIndex } from "./CasinoOutput.js";
 import { Logger } from "ts-log";
 import { FileLogger } from "../../FileLogger.js";
+import { CasinoLER } from "./CasinoLER.js";
 
 function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
-  return el?.declaration.attributes;
+  return el?.declaration.attributes || false;
 }
 
 export class Casino extends Client {
@@ -21,6 +22,7 @@ export class Casino extends Client {
 
   listBLI: CasinoBLI[] = [];
   listLEV: CasinoLEV[] = [];
+  listLER: CasinoLER[] = [];
   lastLEV: CasinoLEV | undefined;
 
   constructor() {
@@ -72,19 +74,23 @@ export class Casino extends Client {
           }
         }
 
-        this.logger.info(`Données trouvées : ${this.listLEV.length} LEV et ${this.listBLI.length} BLI`)
+        this.logger.info(`Données trouvées : ${this.listLEV.length} LEV ; ${this.listBLI.length} BLI ; ${this.listLER.length} LER`)
 
         const xml: {
           lev: string,
-          bli: string
+          bli: string,
+          ler: string
         } = this.translate();
+
+        this.logger.debug(xml.ler);
 
         if (!fs.existsSync(folders.output)) {
           this.logger.info(`${folders.output} n\'existe pas, création en cours ...`);
           fs.mkdirSync(folders.output);
         }
-        this.writeFile(path.join(folders.output, this.nameOutputFile('LEV', element)), xml.lev);
-        this.writeFile(path.join(folders.output, this.nameOutputFile('BL', element)), xml.bli);
+        if (this.listLEV.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('LEV', element)), xml.lev);
+        if (this.listBLI.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('BL', element)), xml.bli);
+        if (this.listLER.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('LER', element)), xml.ler);
         this.logger.info(`${path.join(folders.input, element)} a été généré`);
       }
     });
@@ -104,7 +110,10 @@ export class Casino extends Client {
         case 'BLI':
           let newBLI = this.createBLI(doc);
           this.pushToLastLEV(newBLI);
-          this.listBLI.push(newBLI)
+          this.listBLI.push(newBLI);
+          break;
+        case 'LER':
+          this.listLER.push(this.createLER(doc));
           break;
         default:
           this.logger.warn('document pété : ', doc);
@@ -112,20 +121,22 @@ export class Casino extends Client {
     })
   }
 
-  translate(): { lev: string, bli: string } {
+  translate(): { lev: string, bli: string, ler: string } {
     this.logger.info('Début traduction')
 
     const xmlLEV = this.createXMLStruct(this.listLEV, 'Lettre de voiture');
     const xmlBLI = this.createXMLStruct(this.listBLI, 'BL');
+    const xmlLER = this.createXMLStruct(this.listLER, 'LER');
 
     return {
       bli: xmlBLI,
-      lev: xmlLEV
+      lev: xmlLEV,
+      ler: xmlLER
     }
 
   }
 
-  createXMLStruct(list: CasinoLEV[] | CasinoBLI[], type: 'Lettre de voiture' | 'BL'): string {
+  createXMLStruct(list: CasinoLEV[] | CasinoBLI[] | CasinoLER[], type: 'Lettre de voiture' | 'BL' | 'LER'): string {
     var multiLineList: GEDMultiLines[] = [];
     var multiLineNumCommande: GEDMultiLines;
     var multiLineCodeEntrepot: GEDMultiLines;
@@ -177,12 +188,12 @@ export class Casino extends Client {
         }
       })
     });
-    var outputLEV: HUBIndex = {
+    var output: HUBIndex = {
       HUBIndex: {
         HUBFile: hubFile
       }
     }
-    const xml = js2xml(outputLEV, { compact: true });
+    const xml = js2xml(output, { compact: true });
     return xml
   }
 
@@ -208,6 +219,24 @@ export class Casino extends Client {
 
   createBLI(doc: XmlElement): CasinoBLI {
     return new CasinoBLI(
+      this.getElementValue(doc, 'categorie'),
+      this.getElementValue(doc, 'code_type'),
+      this.getElementValue(doc, 'code_sous_type'),
+      this.getElementValue(doc, 'code_fournisseur'),
+      this.getElementValue(doc, 'date_traitement'),
+      this.getElementValue(doc, 'Num_bl'),
+      this.getAllNotNullElementValue(doc, 'num_commande'),
+      this.getAllNotNullElementValue(doc, 'code_entrepot'),
+      this.getElementValue(doc, 'Entrepot_admin'),
+      this.getElementValue(doc, 'Date_livraison'),
+      this.getElementValue(doc, 'Code_societe'),
+      this.getElementValue(doc, 'Document Filename'),
+      this.getElementValue(doc, 'lot_numerisation')
+    );
+  }
+
+  createLER(doc: XmlElement): CasinoLER {
+    return new CasinoLER(
       this.getElementValue(doc, 'categorie'),
       this.getElementValue(doc, 'code_type'),
       this.getElementValue(doc, 'code_sous_type'),
