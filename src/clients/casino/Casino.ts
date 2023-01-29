@@ -168,7 +168,8 @@ export class Casino extends Client {
           Date_document: element.date_traitement,
           Date_livraison: element.date_livraison,
           Type_document: type,
-          Entrepot_admin: element.entrepot_admin
+          Entrepot_admin: element.entrepot_admin,
+          Lot_numerisation: element.lot_numerisation
         },
         GEDMultiLinesList: {
           //On force la séparation entre l'objet et sa référence
@@ -201,6 +202,7 @@ export class Casino extends Client {
       this.getElementValue(doc, 'Date_livraison'),
       this.getElementValue(doc, 'Code_societe'),
       this.getElementValue(doc, 'Document Filename'),
+      this.getElementValue(doc, 'lot_numerisation')
     );
   }
 
@@ -218,6 +220,7 @@ export class Casino extends Client {
       this.getElementValue(doc, 'Date_livraison'),
       this.getElementValue(doc, 'Code_societe'),
       this.getElementValue(doc, 'Document Filename'),
+      this.getElementValue(doc, 'lot_numerisation')
     );
   }
 

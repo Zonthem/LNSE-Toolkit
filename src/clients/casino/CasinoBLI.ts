@@ -11,6 +11,7 @@ export class CasinoBLI {
   date_livraison: string;
   code_societe: string;
   document_filename: string;
+  lot_numerisation: string;
 
   constructor(
     _categorie: string, 
@@ -24,19 +25,21 @@ export class CasinoBLI {
     _entrepot_admin: string, 
     _date_livraison: string, 
     _code_societe: string, 
-    _document_filename: string
+    _document_filename: string,
+    _lot_numerisation: string
   ) {
-    this.categorie = _categorie
-    this.code_type = _code_type
-    this.code_sous_type = _code_sous_type
-    this.code_fournisseur = _code_fournisseur
-    this.date_traitement =  _date_traitement
-    this.num_bl = _num_bl
-    this.num_commande = _num_commande
-    this.code_entrepot = _code_entrepot
-    this.entrepot_admin = _entrepot_admin
-    this.date_livraison = _date_livraison
-    this.code_societe = _code_societe
-    this.document_filename = _document_filename
+    this.categorie = _categorie;
+    this.code_type = _code_type;
+    this.code_sous_type = _code_sous_type;
+    this.code_fournisseur = _code_fournisseur;
+    this.date_traitement =  _date_traitement;
+    this.num_bl = _num_bl;
+    this.num_commande = _num_commande;
+    this.code_entrepot = _code_entrepot;
+    this.entrepot_admin = _entrepot_admin;
+    this.date_livraison = _date_livraison;
+    this.code_societe = _code_societe;
+    this.document_filename = _document_filename;
+    this.lot_numerisation = _lot_numerisation;
   }
 }
