@@ -82,8 +82,6 @@ export class Casino extends Client {
           ler: string
         } = this.translate();
 
-        this.logger.debug(xml.ler);
-
         if (!fs.existsSync(folders.output)) {
           this.logger.info(`${folders.output} n\'existe pas, création en cours ...`);
           fs.mkdirSync(folders.output);
@@ -116,7 +114,7 @@ export class Casino extends Client {
           this.listLER.push(this.createLER(doc));
           break;
         default:
-          this.logger.warn('document pété : ', doc);
+          this.logger.warn('document pété : ', sousType);
       }
     })
   }
