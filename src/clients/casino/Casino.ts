@@ -86,6 +86,7 @@ export class Casino extends Client {
           this.logger.info(`${folders.output} n\'existe pas, création en cours ...`);
           fs.mkdirSync(folders.output);
         }
+        console.log(path.join(folders.output, this.nameOutputFile('LEV', element)));
         if (this.listLEV.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('LEV', element)), xml.lev);
         if (this.listBLI.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('BL', element)), xml.bli);
         if (this.listLER.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('LER', element)), xml.ler);
@@ -298,7 +299,17 @@ export class Casino extends Client {
   }
 
   nameOutputFile(type: 'LEV' | 'BL' | 'LER', nameInputFile: string): string {
-    let fileInputCut: string[] = nameInputFile.split('.')[0].split('_');
+    console.log(nameInputFile);
+    let pathStr: string[] = nameInputFile.split(path.sep);
+    let fileInputCut: string[];
+    console.log(pathStr);
+    if (pathStr.length > 1) {
+      fileInputCut = pathStr.pop()?.split('.')[0].split('_') || ['undefined'];
+    } else {
+      fileInputCut = pathStr[0].split('.')[0].split('_');
+    }
+    console.log(pathStr);
+    console.log(fileInputCut);
     if (fileInputCut.length < 3) {
       this.logger.warn('Le fichier d\'entrée ' + nameInputFile + ' a un nom qui ne correspond pas au pattern attendu : HUB-INDEX-XXX_yyyy-MM-dd_numLot.xml')
       return 'HUB-INDEX-' + type + '.xml';
@@ -312,6 +323,6 @@ export class Casino extends Client {
       + fileInputCut[2]
       + '.xml';
 
-    return newName;
+    return [...pathStr, newName].join('/');
   }
 }
