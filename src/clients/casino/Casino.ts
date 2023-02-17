@@ -245,6 +245,7 @@ export class Casino extends Client {
     if (this.lastLEV.addDateDesactivation(bli.date_desactivation)) {
       this.logger.warn('Attention, 2 BLI ont des date_desactivation différentes, la première sera gardée par défaut');
     }
+    this.lastLEV.addEntrepotAdmin(bli.entrepot_admin);
   }
 
   getElementValue(doc: XmlElement, key: string): string {

@@ -72,6 +72,9 @@ export class CasinoLEV {
     } else {
       return true;
     }
-    
+  }
+
+  addEntrepotAdmin(_entrepot_admin: string) {
+    this.entrepot_admin = _entrepot_admin;
   }
 }
