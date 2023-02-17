@@ -1,9 +1,9 @@
 import inquirer from "inquirer";
 import * as fs from 'fs';
 import path from 'path';
-import { inputFolderPrompt, outputFolderPrompt } from "../../commands/CasinoPrompt.js";
+import { defaultOutputMessage, inputFolderPrompt, outputFolderPrompt } from "../../commands/DefaultPrompt.js";
 import { CasinoAnswer } from "../../types/CasinoAnswer.js";
-import { Client } from "../AbstractClient.js";
+import { Client, InputObjectRead, isXmlElement } from "../AbstractClient.js";
 import { xml2js, Element as XmlElement, ElementCompact, js2xml } from "xml-js";
 import { CasinoLEV } from "./CasinoLEV.js";
 import { CasinoBLI } from "./CasinoBLI.js";
@@ -12,13 +12,7 @@ import { Logger } from "ts-log";
 import { FileLogger } from "../../FileLogger.js";
 import { CasinoLER } from "./CasinoLER.js";
 
-function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
-  return el?.declaration.attributes || false;
-}
-
 export class Casino extends Client {
-  inputFolder!: string;
-  logger: Logger;
 
   listBLI: CasinoBLI[] = [];
   listLEV: CasinoLEV[] = [];
@@ -27,8 +21,6 @@ export class Casino extends Client {
 
   constructor() {
     super();
-    this.runMessage();
-    this.logger = FileLogger.getInstance();
   }
 
   runMessage() {
@@ -41,28 +33,18 @@ export class Casino extends Client {
       })
   }
 
-  startProcess(folders: CasinoAnswer) {
-    this.inputFolder = folders.input;
-    var filelist: string[] = [];
-    const folderlist: string[] = fs.readdirSync(folders.input);
+  startProcess(answers: CasinoAnswer) {
+    this.inputFolder = answers.input;
+    this.outputFolder = (answers.output === defaultOutputMessage ? answers.input : answers.output);
 
-    for (const folder of folderlist) {
-      let stats: fs.Stats = fs.statSync(path.join(folders.input, folder));
-      if (stats.isDirectory()) {
-        fs.readdirSync(path.join(folders.input, folder)).forEach(f => {
-          folderlist.push(path.join(folder, f));
-        })
-      } else {
-        filelist.push(folder);
-      }
-    }
+    const inputObjectRead: InputObjectRead = this.readFromInputFolder();
 
-    this.logger.info(folderlist.length + ' fichiers découverts');
+    this.logger.info(inputObjectRead.objects.length + ' fichiers découverts');
 
-    filelist.forEach(element => {
+    this.filelist.forEach(element => {
       if (element.toLowerCase().endsWith('.xml')) {
-        this.logger.info(`Traitement de ${path.join(folders.input, element)}`);
-        let file = fs.readFileSync(path.join(folders.input, element), 'utf-8');
+        this.logger.info(`Traitement de ${path.join(answers.input, element)}`);
+        let file = fs.readFileSync(path.join(answers.input, element), 'utf-8');
         const obj = xml2js(file);
 
         if (isXmlElement(obj)) {
@@ -82,15 +64,15 @@ export class Casino extends Client {
           ler: string
         } = this.translate();
 
-        if (!fs.existsSync(folders.output)) {
-          this.logger.info(`${folders.output} n\'existe pas, création en cours ...`);
-          fs.mkdirSync(folders.output);
+        if (!fs.existsSync(answers.output)) {
+          this.logger.info(`${answers.output} n\'existe pas, création en cours ...`);
+          fs.mkdirSync(answers.output);
         }
-        console.log(path.join(folders.output, this.nameOutputFile('LEV', element)));
-        if (this.listLEV.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('LEV', element)), xml.lev);
-        if (this.listBLI.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('BL', element)), xml.bli);
-        if (this.listLER.length > 0) this.writeFile(path.join(folders.output, this.nameOutputFile('LER', element)), xml.ler);
-        this.logger.info(`${path.join(folders.input, element)} a été généré`);
+        console.log(path.join(answers.output, this.nameOutputFile('LEV', element)));
+        if (this.listLEV.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('LEV', element)), xml.lev);
+        if (this.listBLI.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('BL', element)), xml.bli);
+        if (this.listLER.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('LER', element)), xml.ler);
+        this.logger.info(`${path.join(answers.input, element)} a été généré`);
       }
     });
   }

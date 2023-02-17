@@ -1,4 +1,5 @@
 export type DomotiAnswer = {
   input: string,
-  output: string
+  output: string,
+  zip: boolean
 }

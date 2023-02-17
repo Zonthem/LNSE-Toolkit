@@ -1,8 +1,8 @@
 import inquirer from "inquirer";
 import * as fs from 'fs';
-import { inputFolderPrompt, outputFolderPrompt } from "../../commands/DomotiPrompt.js";
+import { defaultOutputMessage, doZipPrompt, inputFolderPrompt, outputFolderPrompt, zipPathPrompt } from "../../commands/DefaultPrompt.js";
 import { DomotiAnswer } from "../../types/DomotiAnswer.js";
-import { Client } from "../AbstractClient.js";
+import { Client, InputObjectRead, isXmlElement } from "../AbstractClient.js";
 import path from "path";
 import { xml2js, Element as XmlElement, ElementCompact, Attributes, js2xml } from "xml-js";
 import { Data, DomotiOutputObject } from "./DomotiOutputObject.js";
@@ -10,71 +10,57 @@ import { DomotiInputObject, Image } from "./DomotiInputObject.js";
 import { FileLogger } from "../../FileLogger.js";
 import { Logger } from "ts-log";
 
-function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
-  return el.declaration.attributes;
-}
-
 export class Domoti extends Client {
-
-  inputFolder!: string;
-  logger: Logger;
 
   constructor() {
     super();
-    this.runMessage();
-    this.logger = FileLogger.getInstance();
   }
 
   runMessage() {
     inquirer.prompt([
       inputFolderPrompt,
-      outputFolderPrompt
+      outputFolderPrompt,
+      doZipPrompt,
+      zipPathPrompt
     ])
       .then((answers: DomotiAnswer) => {
         this.startProcess(answers)
       })
   }
 
-  startProcess(folders: DomotiAnswer) {
-    this.inputFolder = folders.input;
-    var filelist: string[] = [];
-    const folderlist: string[] = fs.readdirSync(folders.input);
+  startProcess(answers: DomotiAnswer) {
+    this.inputFolder = answers.input;
+    this.outputFolder = (answers.output === defaultOutputMessage ? answers.input : answers.output);
 
-    for (const folder of folderlist) {
-      let stats: fs.Stats = fs.statSync(path.join(folders.input, folder));
-      if (stats.isDirectory()) {
-        fs.readdirSync(path.join(folders.input, folder)).forEach(f => {
-          folderlist.push(path.join(folder, f));
-        })
-      } else {
-        filelist.push(folder);
-      }
-    }
+    const inputObjectRead: InputObjectRead = this.readFromInputFolder();
 
-    this.logger.info(folderlist.length + ' fichiers découverts');
+    this.logger.info(inputObjectRead.objects.length + ' fichiers découverts');
 
-    filelist.forEach(element => {
+    this.filelist.forEach(element => {
       if (element.toLowerCase().endsWith('.xml')) {
-        this.logger.info(`Traitement de ${path.join(folders.input, element)}`);
-        let file = fs.readFileSync(path.join(folders.input, element), 'utf-8');
+        this.logger.info(`Traitement de ${path.join(answers.input, element)}`);
+        let file = fs.readFileSync(path.join(answers.input, element), 'utf-8');
         const obj = xml2js(file);
 
         if (isXmlElement(obj)) {
-          this.logger.info(`Traduction de ${path.join(folders.input, element)} ...`);
-          const xml = this.translate(obj, path.join(folders.input, element));
-          this.logger.info(`Fin de la traduction de ${path.join(folders.input, element)}`);
-          if (!fs.existsSync(folders.output)) {
-            this.logger.info(`${folders.output} n\'existe pas, création en cours ...`);
-            fs.mkdirSync(folders.output);
+          this.logger.info(`Traduction de ${path.join(answers.input, element)} ...`);
+          const xml = this.translate(obj, path.join(answers.input, element));
+          this.logger.info(`Fin de la traduction de ${path.join(answers.input, element)}`);
+          if (!fs.existsSync(answers.output)) {
+            this.logger.info(`${answers.output} n\'existe pas, création en cours ...`);
+            fs.mkdirSync(answers.output);
           }
-          this.writeFile(path.join(folders.output, element), xml);
-          this.logger.info(`${path.join(folders.input, element)} a été généré`);
+          this.writeFile(path.join(answers.output, element), xml);
+          this.logger.info(`${path.join(answers.input, element)} a été généré`);
         } else {
-          this.logger.info(`${path.join(folders.input, element)} est pourri`);
+          this.logger.info(`${path.join(answers.input, element)} est pourri`);
         }
       }
     });
-    this.logger.info('Tous les éléments sont traités, fermeture de l\'app');
+    this.logger.info('Tous les éléments sont traités');
+    if (answers.zip) {
+      this.doZip(inputObjectRead.folders, 'C:/Users/Zonthem/Documents/projet/LNSE-Toolkit/exemples/zip/test.zip')      
+    }
   }
 
   translate(obj: XmlElement, filename: string): string {
