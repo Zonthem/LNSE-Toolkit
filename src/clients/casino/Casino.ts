@@ -281,7 +281,6 @@ export class Casino extends Client {
             return '';
         }
       });
-
     return a || [];
   }
 
