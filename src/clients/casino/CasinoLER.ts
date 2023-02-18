@@ -12,6 +12,7 @@ export class CasinoLER {
   code_societe: string;
   document_filename: string;
   lot_numerisation: string;
+  date_desactivation: string;
 
   constructor(
     _categorie: string, 
@@ -26,7 +27,8 @@ export class CasinoLER {
     _date_livraison: string, 
     _code_societe: string, 
     _document_filename: string,
-    _lot_numerisation: string
+    _lot_numerisation: string,
+    _date_desactivation: string
   ) {
     this.categorie = _categorie;
     this.code_type = _code_type;
@@ -41,5 +43,6 @@ export class CasinoLER {
     this.code_societe = _code_societe;
     this.document_filename = _document_filename;
     this.lot_numerisation = _lot_numerisation;
+    this.date_desactivation = _date_desactivation;
   }
 }

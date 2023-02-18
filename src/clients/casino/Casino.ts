@@ -4,12 +4,10 @@ import path from 'path';
 import { defaultOutputMessage, inputFolderPrompt, outputFolderPrompt } from "../../commands/DefaultPrompt.js";
 import { CasinoAnswer } from "../../types/CasinoAnswer.js";
 import { Client, InputObjectRead, isXmlElement } from "../AbstractClient.js";
-import { xml2js, Element as XmlElement, ElementCompact, js2xml } from "xml-js";
+import { xml2js, Element as XmlElement, js2xml } from "xml-js";
 import { CasinoLEV } from "./CasinoLEV.js";
 import { CasinoBLI } from "./CasinoBLI.js";
 import { GEDMultiLines, HUBFile, HUBIndex } from "./CasinoOutput.js";
-import { Logger } from "ts-log";
-import { FileLogger } from "../../FileLogger.js";
 import { CasinoLER } from "./CasinoLER.js";
 
 export class Casino extends Client {
@@ -68,7 +66,6 @@ export class Casino extends Client {
           this.logger.info(`${answers.output} n\'existe pas, création en cours ...`);
           fs.mkdirSync(answers.output);
         }
-        console.log(path.join(answers.output, this.nameOutputFile('LEV', element)));
         if (this.listLEV.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('LEV', element)), xml.lev);
         if (this.listBLI.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('BL', element)), xml.bli);
         if (this.listLER.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('LER', element)), xml.ler);
@@ -161,7 +158,8 @@ export class Casino extends Client {
           Date_livraison: element.date_livraison,
           Type_document: type,
           Entrepot_admin: element.entrepot_admin,
-          Lot_numerisation: element.lot_numerisation
+          Lot_numerisation: element.lot_numerisation,
+          Date_desactivation: element.date_desactivation
         },
         GEDMultiLinesList: {
           //On force la séparation entre l'objet et sa référence
@@ -194,7 +192,8 @@ export class Casino extends Client {
       this.getElementValue(doc, 'Date_livraison'),
       this.getElementValue(doc, 'Code_societe'),
       this.getElementValue(doc, 'Document Filename'),
-      this.getElementValue(doc, 'lot_numerisation')
+      this.getElementValue(doc, 'lot_numerisation'),
+      ""
     );
   }
 
@@ -212,7 +211,8 @@ export class Casino extends Client {
       this.getElementValue(doc, 'Date_livraison'),
       this.getElementValue(doc, 'Code_societe'),
       this.getElementValue(doc, 'Document Filename'),
-      this.getElementValue(doc, 'lot_numerisation')
+      this.getElementValue(doc, 'lot_numerisation'),
+      this.getElementValue(doc, 'Date_desactivation')
     );
   }
 
@@ -230,7 +230,8 @@ export class Casino extends Client {
       this.getElementValue(doc, 'Date_livraison'),
       this.getElementValue(doc, 'Code_societe'),
       this.getElementValue(doc, 'Document Filename'),
-      this.getElementValue(doc, 'lot_numerisation')
+      this.getElementValue(doc, 'lot_numerisation'),
+      this.getElementValue(doc, 'Date_desactivation'),
     );
   }
 
@@ -241,6 +242,10 @@ export class Casino extends Client {
     }
     this.lastLEV.addCodeEntrepot(bli.code_entrepot);
     this.lastLEV.addNumCommande(bli.num_commande);
+    if (this.lastLEV.addDateDesactivation(bli.date_desactivation)) {
+      this.logger.warn('Attention, 2 BLI ont des date_desactivation différentes, la première sera gardée par défaut');
+    }
+    this.lastLEV.addEntrepotAdmin(bli.entrepot_admin);
   }
 
   getElementValue(doc: XmlElement, key: string): string {
@@ -281,17 +286,13 @@ export class Casino extends Client {
   }
 
   nameOutputFile(type: 'LEV' | 'BL' | 'LER', nameInputFile: string): string {
-    console.log(nameInputFile);
     let pathStr: string[] = nameInputFile.split(path.sep);
     let fileInputCut: string[];
-    console.log(pathStr);
     if (pathStr.length > 1) {
       fileInputCut = pathStr.pop()?.split('.')[0].split('_') || ['undefined'];
     } else {
       fileInputCut = pathStr[0].split('.')[0].split('_');
     }
-    console.log(pathStr);
-    console.log(fileInputCut);
     if (fileInputCut.length < 3) {
       this.logger.warn('Le fichier d\'entrée ' + nameInputFile + ' a un nom qui ne correspond pas au pattern attendu : HUB-INDEX-XXX_yyyy-MM-dd_numLot.xml')
       return 'HUB-INDEX-' + type + '.xml';

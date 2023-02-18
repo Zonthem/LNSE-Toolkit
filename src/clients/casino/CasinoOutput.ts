@@ -21,6 +21,7 @@ export type HUBFile = {
     Date_livraison: string,
     Code_societe: string,
     Lot_numerisation: string,
+    Date_desactivation: string
   },
   GEDMultiLinesList: {
     GEDMultiLines: GEDMultiLines[]
