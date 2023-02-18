@@ -7,7 +7,7 @@ CALL git status | FIND /i "Your branch is up to date"
 if not errorlevel 1 (
   echo Pas de mise a jour en attente
 ) else (
-  echo Telechargement de la mise a jour
+  echo Telechargement de la mise a jour 
   CALL git fetch
 )
 
