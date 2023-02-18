@@ -7,7 +7,9 @@ CALL git status | FIND /i "Your branch is up to date"
 if not errorlevel 1 (
   echo Pas de mise a jour en attente
 ) else (
-  echo Telechargement de la mise a jour 
+  CHOICE /M "Voulez-vous telecharger la mise a jour ?"
+  if errorlevel 2 GOTO END
   CALL git fetch
+  CALL initialisation.bat
 )
-
+:END
