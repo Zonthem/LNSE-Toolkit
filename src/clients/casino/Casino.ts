@@ -282,7 +282,7 @@ export class Casino extends Client {
         }
       });
 
-    return a || [];
+    return a || []; 
   }
 
   nameOutputFile(type: 'LEV' | 'BL' | 'LER', nameInputFile: string): string {
