@@ -1,5 +1,6 @@
 import { Logger } from "ts-log";
 import * as fs from "fs";
+import * as path from "path";
 
 
 /**
@@ -23,6 +24,9 @@ export class FileLogger implements Logger {
   }
 
   public constructor(filename: string) {
+    if (!fs.existsSync(filename)) {
+      fs.mkdirSync(path.dirname(filename), { recursive: true });
+    }
     this.fd = fs.openSync(filename, "a");
   }
 
@@ -49,6 +53,6 @@ export class FileLogger implements Logger {
   private append(type: string, message: string) {
     const msg: string = `${new Date().toISOString()} ${type} ${message}`;
     fs.writeSync(this.fd, msg + '\n');
-    console.log(msg)
+    console.log(msg);
   }
 }
