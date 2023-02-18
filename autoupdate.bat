@@ -9,6 +9,7 @@ if not errorlevel 1 (
 ) else (
   CHOICE /M "Voulez-vous telecharger la mise a jour ?"
   if errorlevel 2 GOTO END
+  CALL git fetch
   CALL git pull
   CALL initialisation.bat
 )
