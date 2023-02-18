@@ -34,9 +34,8 @@ export class Casino extends Client {
   startProcess(answers: CasinoAnswer) {
     this.inputFolder = answers.input;
     this.outputFolder = (answers.output === defaultOutputMessage ? answers.input : answers.output);
-
     const inputObjectRead: InputObjectRead = this.readFromInputFolder();
-
+    
     this.logger.info(inputObjectRead.objects.length + ' fichiers découverts');
 
     this.filelist.forEach(element => {
@@ -281,7 +280,6 @@ export class Casino extends Client {
             return '';
         }
       });
-
     return a || [];
   }
 
