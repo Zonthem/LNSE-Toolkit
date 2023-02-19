@@ -16,6 +16,8 @@ class CliTool {
 
     console.log(this.header);
 
+    console.log('coucou')
+
     const mainMenu = new MainMenu();
     mainMenu.displayMainMenu()
       .then(client => {
