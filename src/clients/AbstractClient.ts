@@ -46,7 +46,7 @@ export abstract class Client {
     for (const object of inputObjectList) {
       let stats: fs.Stats = fs.statSync(path.join(this.inputFolder, object));
       if (stats.isDirectory()) {
-        inputSubfolderList.push(JSON.parse(JSON.stringify(this.inputFolder)));
+        inputSubfolderList.push(JSON.parse(JSON.stringify(object)));
         fs.readdirSync(path.join(this.inputFolder, object)).forEach(f => {
           inputObjectList.push(path.join(object, f));
         })
