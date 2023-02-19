@@ -16,7 +16,8 @@ class CliTool {
 
     console.log(this.header);
 
-    console.log('coucou')
+    console.log('v1.0.0');
+    console.log();
 
     const mainMenu = new MainMenu();
     mainMenu.displayMainMenu()

@@ -1,7 +1,7 @@
 import inquirer from "inquirer";
 import * as fs from 'fs';
-import { defaultOutputMessage, inputFolderPrompt, outputFolderPrompt } from "../../commands/DefaultPrompt.js";
-import { DomotiAnswer } from "../../types/DomotiAnswer.js";
+import { defaultOutputMessage, doZipPrompt, inputFolderPrompt, outputFolderPrompt, zipPathPrompt } from "../../commands/DefaultPrompt.js";
+import { DefaultAnswer } from "../../types/DefaultAnswer.js";
 import { Client, InputObjectRead, isXmlElement } from "../AbstractClient.js";
 import path from "path";
 import { xml2js, Element as XmlElement, Attributes, js2xml } from "xml-js";
@@ -18,15 +18,15 @@ export class Domoti extends Client {
     inquirer.prompt([
       inputFolderPrompt,
       outputFolderPrompt,
-      //doZipPrompt,
-      //zipPathPrompt
+      doZipPrompt,
+      zipPathPrompt
     ])
-      .then((answers: DomotiAnswer) => {
+      .then((answers: DefaultAnswer) => {
         this.startProcess(answers)
       })
   }
 
-  startProcess(answers: DomotiAnswer) {
+  startProcess(answers: DefaultAnswer) {
     this.inputFolder = answers.input;
     this.outputFolder = (answers.output === defaultOutputMessage ? answers.input : answers.output);
 
@@ -56,9 +56,9 @@ export class Domoti extends Client {
       }
     });
     this.logger.info('Tous les éléments sont traités');
-    /*if (answers.zip) {
-      this.doZip(inputObjectRead.folders, 'C:/Users/Zonthem/Documents/projet/LNSE-Toolkit/exemples/zip/test.zip')      
-    }*/
+    if (answers.zip) {
+      this.doZip(inputObjectRead.folders, answers.zipPath)      
+    }
   }
 
   translate(obj: XmlElement, filename: string): string {

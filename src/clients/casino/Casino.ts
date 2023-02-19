@@ -1,8 +1,8 @@
 import inquirer from "inquirer";
 import * as fs from 'fs';
 import path from 'path';
-import { defaultOutputMessage, inputFolderPrompt, outputFolderPrompt } from "../../commands/DefaultPrompt.js";
-import { CasinoAnswer } from "../../types/CasinoAnswer.js";
+import { defaultOutputMessage, doZipPrompt, inputFolderPrompt, outputFolderPrompt, zipPathPrompt } from "../../commands/DefaultPrompt.js";
+import { DefaultAnswer } from "../../types/DefaultAnswer.js";
 import { Client, InputObjectRead, isXmlElement } from "../AbstractClient.js";
 import { xml2js, Element as XmlElement, js2xml } from "xml-js";
 import { CasinoLEV } from "./CasinoLEV.js";
@@ -24,14 +24,16 @@ export class Casino extends Client {
   runMessage() {
     inquirer.prompt([
       inputFolderPrompt,
-      outputFolderPrompt
+      outputFolderPrompt,
+      doZipPrompt,
+      zipPathPrompt
     ])
-      .then((answers: CasinoAnswer) => {
+      .then((answers: DefaultAnswer) => {
         this.startProcess(answers)
       })
   }
 
-  startProcess(answers: CasinoAnswer) {
+  startProcess(answers: DefaultAnswer) {
     this.inputFolder = answers.input;
     this.outputFolder = (answers.output === defaultOutputMessage ? answers.input : answers.output);
     const inputObjectRead: InputObjectRead = this.readFromInputFolder();
@@ -71,6 +73,11 @@ export class Casino extends Client {
         this.logger.info(`${path.join(answers.input, element)} a été généré`);
       }
     });
+    this.logger.info('Tous les éléments sont traités');
+    if (answers.zip) {
+      console.log(inputObjectRead.folders)
+      //this.doZip(inputObjectRead.folders, answers.zipPath)      
+    }
   }
 
   extractFromXml(listDocs: XmlElement[]) {
