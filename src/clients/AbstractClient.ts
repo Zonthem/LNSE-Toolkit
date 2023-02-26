@@ -10,6 +10,11 @@ export type InputObjectRead = {
   folders: string[];
 }
 
+export type InputSubfolderList = {
+  path: string,
+  filename: string
+}
+
 export function isXmlElement(el: XmlElement | ElementCompact): el is XmlElement {
   return el?.declaration.attributes || false;
 }
@@ -44,16 +49,22 @@ export abstract class Client {
     this.filelist = [];
 
     for (const object of inputObjectList) {
+
       let stats: fs.Stats = fs.statSync(path.join(this.inputFolder, object));
+
+      console.log(path.join(this.inputFolder, object));
+      console.log(stats.isDirectory());
+
       if (stats.isDirectory()) {
-        inputSubfolderList.push(JSON.parse(JSON.stringify(object)));
+        inputSubfolderList.push(JSON.parse(JSON.stringify(path.join(this.inputFolder, object))));
         fs.readdirSync(path.join(this.inputFolder, object)).forEach(f => {
           inputObjectList.push(path.join(object, f));
         })
       } else {
-        if (!inputSubfolderList.includes(this.inputFolder)) {
+        // TODO : trouver un moyen de zipper le dossier racine s'il ne contient pas de sous-dossier
+        /*if (!inputSubfolderList.includes(this.inputFolder)) {
           inputSubfolderList.push(JSON.parse(JSON.stringify(this.inputFolder)));
-        }
+        }*/
         this.filelist.push(object);
       }
     }
@@ -62,13 +73,15 @@ export abstract class Client {
       folders: inputSubfolderList,
       objects: inputObjectList
     };
+
   }
 
   async doZip(folderList: string[], folderOut: string): Promise<void> {
     return new Promise(resolve => {
       folderList.forEach(async f => {
         this.logger.info('zippationnage de ' + f);
-        let zipReturnValue: Error | void = await zip(f, folderOut);
+        let folderName: string = f.substring(f.lastIndexOf(path.sep) + 1) + '.zip';
+        let zipReturnValue: Error | void = await zip(f, path.join(folderOut, folderName));
         if (zipReturnValue instanceof Error) {
           this.logger.warn('Problème  ' + zipReturnValue.name + ' : ' + zipReturnValue.message)
         }

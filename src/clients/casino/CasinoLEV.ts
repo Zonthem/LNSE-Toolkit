@@ -53,11 +53,27 @@ export class CasinoLEV {
   }
 
   addNumCommande(_num_commande: string | string[]) {
-    this.num_commande = this.num_commande.concat(_num_commande)
+    if (Array.isArray(_num_commande)) {
+      _num_commande.forEach(num => {
+        if (this.num_commande.includes(num)) return;
+        this.num_commande.push(num)
+      })
+    } else {
+      if (this.num_commande.includes(_num_commande)) return;
+      this.num_commande.push(_num_commande)
+    }
   }
 
   addCodeEntrepot(_code_entrepot: string | string[]) {
-    this.code_entrepot = this.code_entrepot.concat(_code_entrepot)
+    if (Array.isArray(_code_entrepot)) {
+      _code_entrepot.forEach(code => {
+        if (this.code_entrepot.includes(code)) return;
+        this.code_entrepot.push(code)
+      })
+    } else {
+      if (this.code_entrepot.includes(_code_entrepot)) return;
+      this.code_entrepot.push(_code_entrepot)
+    }
   }
 
   /**
