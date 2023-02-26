@@ -36,22 +36,22 @@ export class Domoti extends Client {
 
     this.filelist.forEach(element => {
       if (element.toLowerCase().endsWith('.xml')) {
-        this.logger.info(`Traitement de ${path.join(answers.input, element)}`);
-        let file = fs.readFileSync(path.join(answers.input, element), 'utf-8');
+        this.logger.info(`Traitement de ${path.join(this.inputFolder, element)}`);
+        let file = fs.readFileSync(path.join(this.inputFolder, element), 'utf-8');
         const obj = xml2js(file);
 
         if (isXmlElement(obj)) {
-          this.logger.info(`Traduction de ${path.join(answers.input, element)} ...`);
-          const xml = this.translate(obj, path.join(answers.input, element));
-          this.logger.info(`Fin de la traduction de ${path.join(answers.input, element)}`);
-          if (!fs.existsSync(answers.output)) {
-            this.logger.info(`${answers.output} n\'existe pas, création en cours ...`);
-            fs.mkdirSync(answers.output);
+          this.logger.info(`Traduction de ${path.join(this.inputFolder, element)} ...`);
+          const xml = this.translate(obj, path.join(this.inputFolder, element));
+          this.logger.info(`Fin de la traduction de ${path.join(this.inputFolder, element)}`);
+          if (!fs.existsSync(this.outputFolder)) {
+            this.logger.info(`${this.outputFolder} n\'existe pas, création en cours ...`);
+            fs.mkdirSync(this.outputFolder);
           }
-          this.writeFile(path.join(answers.output, element), xml);
-          this.logger.info(`${path.join(answers.input, element)} a été généré`);
+          this.writeFile(path.join(this.outputFolder, element), xml);
+          this.logger.info(`${path.join(this.inputFolder, element)} a été généré`);
         } else {
-          this.logger.info(`${path.join(answers.input, element)} est pourri`);
+          this.logger.info(`${path.join(this.inputFolder, element)} est pourri`);
         }
       }
     });

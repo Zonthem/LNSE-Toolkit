@@ -47,6 +47,7 @@ export class Casino extends Client {
         const obj = xml2js(file);
 
         if (isXmlElement(obj)) {
+          this.listBLI = [], this.listLER = [], this.listLEV = []
           const listDocs = obj.elements?.find(f => f.name = 'root')?.elements;
           if (listDocs === undefined) {
             this.logger.warn('Pas de données trouvées');
@@ -63,20 +64,20 @@ export class Casino extends Client {
           ler: string
         } = this.translate();
 
-        if (!fs.existsSync(answers.output)) {
-          this.logger.info(`${answers.output} n\'existe pas, création en cours ...`);
-          fs.mkdirSync(answers.output);
+        if (!fs.existsSync(this.outputFolder)) {
+          this.logger.info(`${this.outputFolder} n\'existe pas, création en cours ...`);
+          fs.mkdirSync(this.outputFolder);
         }
-        if (this.listLEV.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('LEV', element)), xml.lev);
-        if (this.listBLI.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('BL', element)), xml.bli);
-        if (this.listLER.length > 0) this.writeFile(path.join(answers.output, this.nameOutputFile('LER', element)), xml.ler);
+        if (this.listLEV.length > 0) this.writeFile(path.join(this.outputFolder, this.nameOutputFile('LEV', element)), xml.lev);
+        if (this.listBLI.length > 0) this.writeFile(path.join(this.outputFolder, this.nameOutputFile('BL', element)), xml.bli);
+        if (this.listLER.length > 0) this.writeFile(path.join(this.outputFolder, this.nameOutputFile('LER', element)), xml.ler);
         this.logger.info(`${path.join(answers.input, element)} a été généré`);
       }
     });
     this.logger.info('Tous les éléments sont traités');
     if (answers.zip) {
       console.log(inputObjectRead.folders)
-      //this.doZip(inputObjectRead.folders, answers.zipPath)      
+      this.doZip(inputObjectRead.folders, answers.zipPath)      
     }
   }
 
