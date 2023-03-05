@@ -48,17 +48,20 @@ export abstract class Client {
 
     this.filelist = [];
 
+    // recherche récurs
     for (const object of inputObjectList) {
 
       let stats: fs.Stats = fs.statSync(path.join(this.inputFolder, object));
 
-      console.log(path.join(this.inputFolder, object));
-      console.log(stats.isDirectory());
-
       if (stats.isDirectory()) {
-        inputSubfolderList.push(JSON.parse(JSON.stringify(path.join(this.inputFolder, object))));
+        // add le dossier à la liste des sous dossiers importants QUE SI il contient un fichier .xml
+        let folderHasAnXmlFile: boolean = false;
+        // add tous les fichiers / sous dossiers à la recherche récurs
         fs.readdirSync(path.join(this.inputFolder, object)).forEach(f => {
           inputObjectList.push(path.join(object, f));
+          if (f.toLowerCase().endsWith('.xml')) {
+            inputSubfolderList.push(JSON.parse(JSON.stringify(path.join(this.inputFolder, object))));
+          }
         })
       } else {
         // TODO : trouver un moyen de zipper le dossier racine s'il ne contient pas de sous-dossier
