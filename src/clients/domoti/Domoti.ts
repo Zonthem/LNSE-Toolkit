@@ -34,7 +34,7 @@ export class Domoti extends Client {
 
     this.logger.info(inputObjectRead.objects.length + ' fichiers découverts');
 
-    /*this.filelist.forEach(element => {
+    this.filelist.forEach(element => {
       if (element.toLowerCase().endsWith('.xml')) {
         this.logger.info(`Traitement de ${path.join(this.inputFolder, element)}`);
         let file = fs.readFileSync(path.join(this.inputFolder, element), 'utf-8');
@@ -54,7 +54,7 @@ export class Domoti extends Client {
           this.logger.info(`${path.join(this.inputFolder, element)} est pourri`);
         }
       }
-    });*/
+    });
     this.logger.info('Tous les éléments sont traités');
     if (answers.zip) {
       this.doZip(inputObjectRead.folders, answers.zipPath)      
