@@ -29,3 +29,9 @@ export const zipPathPrompt: QuestionCollection<any> = {
     return answers.zip;
   }
 }
+
+export const zipPathNoWhenPrompt: QuestionCollection<any> = {
+  name: 'zipPath',
+  type: 'input',
+  message: 'Dossier d\'entrée des zips'
+}
