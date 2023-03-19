@@ -5,6 +5,7 @@ import { DomotiCourrier } from "./clients/domoti/DomotiCourrier.js";
 import { MainMenu } from "./MainMenu.js";
 import { ClientAnswer } from "./types/ClientAnswer.js";
 import { Casino } from "./clients/casino/Casino.js";
+import { Zip } from "./clients/zip/Zip.js";
 
 class CliTool {
 
@@ -39,6 +40,9 @@ class CliTool {
         break;
       case 'casino':
         this.currentClient = new Casino();
+        break;
+      case 'zip':
+        this.currentClient = new Zip();
         break;
     }
   }

@@ -16,6 +16,10 @@ export const mainMenuPrompt: QuestionCollection<any> = {
     {
       name: 'Casino',
       value: 'casino'
+    },
+    {
+      name: 'Cheque',
+      value: 'zip'
     }
   ]
 }
